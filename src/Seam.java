@@ -7,6 +7,14 @@ public class Seam {
 	public Seam(int size){
 		indicies = new int[size];
 	}
+	public Seam(int[] array, double weight){
+		indicies = array;
+		totalWeight = weight;
+	}
+	public Seam(double weight){
+		indicies = new int[0];
+		totalWeight = weight;
+	}
 	
 	public void insert(int value){
 		indicies[index] = value;

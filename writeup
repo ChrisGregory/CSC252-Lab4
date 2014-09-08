@@ -4,14 +4,28 @@ Please include in your submission a write-up that includes a description of your
 Algorithm Descriptions and analysis.
 
 double energy(int x, int y);
+	It finds the 4 pixel colors around it (Even if they're across the border).
+	It then does some math to determine the energy.
+	Constant time.
 
 int[] findHorizontalSeam();
+	Find the pixel with the least energy on the left edge.
+	Figure out the seam starting at that pixel that has the least energy.
 
 int[] findVerticalSeam();
+	Find the pixel with the least energy on the top edge.
+	Figure out the seam starting at that pixel that has the least energy.
 
 void removeHorizontalSeam(int[] indicies);
+	For each pixel in the seam,
+	I shift all the pixels after the seam up.
+	Then I should crop it one pixel. But cropping isn't a thing.
+	Theta(W*H)
 
 void removeVerticalSeam(int[]);
-
+	For each pixel in the seam,
+	I shift all the pixels after the seam to the left.
+	Then I should crop it one pixel. But cropping isn't a thing.
+	Theta(W*H)
 
 Help Received: None. Just the document provided and a bit of Google when neccesary.
