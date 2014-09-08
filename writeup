@@ -1,0 +1,17 @@
+Please include in your submission a write-up that includes a description of your algorithm, your analysis of your algorithm, and an explanation of any help that you received.
+
+
+Algorithm Descriptions and analysis.
+
+double energy(int x, int y);
+
+int[] findHorizontalSeam();
+
+int[] findVerticalSeam();
+
+void removeHorizontalSeam(int[] indicies);
+
+void removeVerticalSeam(int[]);
+
+
+Help Received: None. Just the document provided and a bit of Google when neccesary.
