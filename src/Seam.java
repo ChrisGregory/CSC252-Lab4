@@ -16,6 +16,11 @@ public class Seam {
 		totalWeight = weight;
 	}
 	
+	public Seam(Seam cheapest) {
+		this.indicies = cheapest.indicies;
+		this.index = cheapest.index;
+		this.totalWeight = cheapest.totalWeight;
+	}
 	public void insert(int value){
 		indicies[index] = value;
 		index++;

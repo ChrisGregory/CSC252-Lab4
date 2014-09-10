@@ -6,15 +6,23 @@ Algorithm Descriptions and analysis.
 double energy(int x, int y);
 	It finds the 4 pixel colors around it (Even if they're across the border).
 	It then does some math to determine the energy.
-	Constant time.
+	Theta(1)
 
 int[] findHorizontalSeam();
 	Find the pixel with the least energy on the left edge.
 	Figure out the seam starting at that pixel that has the least energy.
+	Energy is added to a cache so we don't need to recurse every time.
+	Resetting the cache every time is Theta(W*H).
+	The image is traversed like a DFS.
+	Finding the seam after resetting the cache is Theta(6n) (because DFS is Theta(E) and each pixel has 6 edges.)
 
 int[] findVerticalSeam();
 	Find the pixel with the least energy on the top edge.
-	Figure out the seam starting at that pixel that has the least energy.
+	Figure out the seam starting at that pixel that has the least energy.	
+	Energy is added to a cache so we don't need to recurse every time.
+	Resetting the cache every time is Theta(W*H).
+	The image is traversed like a DFS.
+	Finding the seam after resetting the cache is Theta(6n) (because DFS is Theta(E) and each pixel has 6 edges.)
 
 void removeHorizontalSeam(int[] indicies);
 	For each pixel in the seam,

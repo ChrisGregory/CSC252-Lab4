@@ -74,39 +74,58 @@ public class SeamCarver {
 		}
 	}
 
+	Seam[][] marks;
+
 	public int[] findHorizontalSeam() {
+		marks = new Seam[width()][height()];
+		for (int i = 0; i < width(); i++) {
+			for (int j = 0; j < height(); j++) {
+				marks[i][j] = null;
+			}
+		}
 		int leastEnergyIndex = 0;
 		double leastEnergy = Double.MAX_VALUE;
-		for (int i = 0; i < width(); i++) {
-			if (energy(i, 0) < leastEnergy) {
-				leastEnergy = energy(i, 0);
+		for (int i = 0; i < height(); i++) {
+			if (energy(0, i) < leastEnergy) {
+				leastEnergy = energy(0, i);
 				leastEnergyIndex = i;
 			}
 		}
-		System.out.println("Least Horizontal Energy: " + leastEnergyIndex + " - " + leastEnergy);
+		System.out.println("Least Horizontal Energy: " + leastEnergyIndex
+				+ " - " + leastEnergy);
 		int[] result = new int[width()];
-		result[0] = leastEnergyIndex;
 		System.out.println("Finding best seam... Please Wait...");
-		result = horizontalSeamHelper(0, leastEnergyIndex, result).getIndicies();
-		System.out.println("Seam found.");
+		Seam resultSeam = horizontalSeamHelper(0, leastEnergyIndex, result);
+		result = resultSeam.getIndicies();
+		System.out.println("Seam found. Weight: " + resultSeam.getWeight());
 		return result;
 	}
 
+	int k = 10;
+
 	public Seam horizontalSeamHelper(int x, int y, int[] current) {
+
+		if (marks[x][y] != null) {
+			return marks[x][y];
+		}
 		if (x < width() - 1) {
 			int[] result = current;
-			result[x] = y;
+			result[y] = x;
 			Seam top = new Seam(Double.MAX_VALUE);
 			Seam bot = new Seam(Double.MAX_VALUE);
+			Seam mid = new Seam(Double.MAX_VALUE);
 			if (y > 0) {
+				//System.out.println(". Going up.");
 				top = horizontalSeamHelper(x + 1, y - 1, current);
 				top.addWeight(energy(x, y));
 			}
-
-			Seam mid = horizontalSeamHelper(x + 1, y, current);
-			mid.addWeight(energy(x, y));
-			
+			if (true) {
+				//System.out.println(". Going right.");
+				mid = horizontalSeamHelper(x + 1, y, current);
+				mid.addWeight(energy(x, y));
+			}
 			if (y < height() - 1) {
+				//System.out.println(". Going down.");
 				bot = horizontalSeamHelper(x + 1, y + 1, current);
 				bot.addWeight(energy(x, y));
 			}
@@ -125,6 +144,7 @@ public class SeamCarver {
 					cheapest = mid;
 				}
 			}
+			marks[x][y] = new Seam(cheapest);
 			return cheapest;
 		} else {
 			return new Seam(current, energy(x, y));
@@ -132,38 +152,54 @@ public class SeamCarver {
 	}
 
 	public int[] findVerticalSeam() {
+		marks = new Seam[width()][height()];
+		for (int i = 0; i < width(); i++) {
+			for (int j = 0; j < height(); j++) {
+				marks[i][j] = null;
+			}
+		}
 		int leastEnergyIndex = 0;
 		double leastEnergy = Double.MAX_VALUE;
-		for (int i = 0; i < height(); i++) {
-			if (energy(0, i) < leastEnergy) {
-				leastEnergy = energy(0, i);
+		for (int i = 0; i < width(); i++) {
+			if (energy(i, 0) < leastEnergy) {
+				leastEnergy = energy(i, 0);
 				leastEnergyIndex = i;
 			}
 		}
-		System.out.println("Least Vertical Energy: " + leastEnergyIndex + " - " + leastEnergy);
-		
+
+		System.out.println("Least Vertical Energy: " + leastEnergyIndex + " - "
+				+ leastEnergy);
+
 		int[] result = new int[height()];
-		result[0] = leastEnergyIndex;
 		System.out.println("Finding best seam... Please Wait...");
-		result = horizontalSeamHelper(leastEnergyIndex, 0, result).getIndicies();
-		System.out.println("Seam found.");
+		Seam resultSeam = verticalSeamHelper(leastEnergyIndex, 0, result);
+		result = resultSeam.getIndicies();
+		System.out.println("Seam found. Weight: " + resultSeam.getWeight());
 		return result;
 	}
 
 	public Seam verticalSeamHelper(int x, int y, int[] current) {
+		if (marks[x][y] != null) {
+			return marks[x][y];
+		}
 		if (y < height() - 1) {
 			int[] result = current;
 			result[y] = x;
 			Seam left = new Seam(Double.MAX_VALUE);
 			Seam right = new Seam(Double.MAX_VALUE);
-			if(x > 0){
-			left = horizontalSeamHelper(x - 1, y + 1, current);
-			left.addWeight(energy(x, y));}
-			Seam mid = horizontalSeamHelper(x, y + 1, current);
-			mid.addWeight(energy(x, y));
-			if(x < width() - 1){
-			right = horizontalSeamHelper(x + 1, y + 1, current);
-			right.addWeight(energy(x, y));}
+			Seam mid = new Seam(Double.MAX_VALUE);
+			if (x > 0) {
+				left = verticalSeamHelper(x - 1, y + 1, current);
+				left.addWeight(energy(x, y));
+			}
+			if (true) {
+				mid = verticalSeamHelper(x, y + 1, current);
+				mid.addWeight(energy(x, y));
+			}
+			if (x < width() - 1) {
+				right = verticalSeamHelper(x + 1, y + 1, current);
+				right.addWeight(energy(x, y));
+			}
 			Seam cheapest;
 			if (left.getWeight() < right.getWeight()) {
 				if (left.getWeight() < mid.getWeight()) {
@@ -178,6 +214,7 @@ public class SeamCarver {
 					cheapest = mid;
 				}
 			}
+			marks[x][y] = new Seam(cheapest);
 			return cheapest;
 		} else {
 			return new Seam(current, energy(x, y));
