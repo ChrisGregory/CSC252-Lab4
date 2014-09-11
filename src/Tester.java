@@ -1,3 +1,4 @@
+import java.util.List;
 import java.util.Random;
 
 
@@ -13,22 +14,29 @@ public class Tester {
 		System.out.println("Height: " + carver.height());
 		
 		System.out.println();
-		
-		int[] horizontalSeam = carver.findHorizontalSeam();
-		if(horizontalSeam.length == carver.width()){
-			System.out.println("Correct Length.");
+		for(int i = 0; i < 100; i++){
+			carver.removeHorizontalSeam();
+			//carver.removeVerticalSeam();
 		}
-		printSeam(horizontalSeam);
-		
-		System.out.println();
-		
-		int[] verticalSeam = carver.findVerticalSeam();
-		if(verticalSeam.length == carver.height()){
-			System.out.println("Correct Length.");
-		}
-		printSeam(verticalSeam);
-		
-		System.out.println();
+//		
+//		int[] horizontalSeam = carver.findHorizontalSeam();
+//		if(horizontalSeam.length == carver.width()){
+//			System.out.println("Correct Length.");
+//		}
+//		printSeam(horizontalSeam);
+//		
+//		System.out.println();
+//		
+//		int[] verticalSeam = carver.findVerticalSeam();
+//		if(verticalSeam.length == carver.height()){
+//			System.out.println("Correct Length.");
+//		}
+//		printSeam(verticalSeam);
+//		
+//		System.out.println();
+//		
+//		System.out.println("Trimming");
+//		
 		
 		System.out.println("Topo Sort Test");
 		Graph g = new Graph(10);
@@ -43,11 +51,21 @@ public class Tester {
 		
 		System.out.println("Graph Built.\n");
 		
-		System.out.println("Adjacency Matrix:");
-		g.printAdjacencyMatrix();
+		//System.out.println("Adjacency Matrix:");
+		//g.printAdjacencyMatrix();
 		System.out.println();
 		System.out.println("Adjacency List:");
 		g.printAdjacencyList();
+		System.out.println("Dependency List");
+		g.printDependencyList();
+		
+		TopologicalSorter topo = new TopologicalSorter();
+		List<Integer> list = topo.sort(g);
+		System.out.println("\nTOPO:");
+		for (int i : list) {
+			System.out.print(i + ", ");
+		}
+		
 		
 		
 	}

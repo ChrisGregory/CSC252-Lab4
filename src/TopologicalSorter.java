@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.PriorityQueue;
 import java.util.Queue;
 
 public class TopologicalSorter {
@@ -14,11 +15,11 @@ public class TopologicalSorter {
 	 * used, why, and what the other approach is.
 	 */
 
-	Queue<Integer> queue = new LinkedList<Integer>();
+	Queue<Integer> queue = new PriorityQueue<Integer>();
 
 	List<Integer> sort(Graph graph) {
 		Graph g = new Graph(graph);
-		queue = new LinkedList<Integer>();
+		queue = new PriorityQueue<Integer>();
 		List<Integer> result = new ArrayList<Integer>();
 		for (int i = 0; i < g.vCount(); i++) {
 			if (g.degree(i) == 0) {

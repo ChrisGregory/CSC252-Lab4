@@ -37,3 +37,5 @@ void removeVerticalSeam(int[]);
 	Theta(W*H)
 
 Help Received: None. Just the document provided and a bit of Google when neccesary.
+I did, on one occasion, explain to someone what FindSeam()'s int array result is supposed to be.
+They didn't get it at the time.

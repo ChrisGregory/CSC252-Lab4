@@ -34,11 +34,25 @@ public class Graph {
 			System.out.print("\n");
 		}
 	}
+
 	public void printAdjacencyList() {
 		for (int i = 0; i < adjacencyMatrix.length; i++) {
 			System.out.print(i +": ");
 			for (int j = 0; j < adjacencyMatrix[i].length; j++) {
 				if(adjacencyMatrix[i][j] != 0){
+					System.out.print(j+", ");
+				}
+			}
+			System.out.print("\n");
+		}
+		System.out.println();
+	}
+	
+	public void printDependencyList() {
+		for (int i = 0; i < adjacencyMatrix.length; i++) {
+			System.out.print(i +": ");
+			for (int j = 0; j < adjacencyMatrix[i].length; j++) {
+				if(adjacencyMatrix[j][i] != 0){
 					System.out.print(j+", ");
 				}
 			}
